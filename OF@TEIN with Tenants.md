@@ -169,4 +169,4 @@ sudo ovs-ofctl -O OpenFlow13 add-flow SW_TW_1 "table=2,eth_type=0x8847,mpls_bos=
 | 3233 / untagged  | 2421           | C1 (192.168.1.1) | 4        |
 | 3232             | pop            | C2 (192.168.1.2) | 2        |
 
-> Note: Currently only one path (adjacent) is being computed in the forwarding table
+> Note: Currently only adjacent paths are used, no LSRs required. Hence ?? entries exist
