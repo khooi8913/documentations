@@ -131,6 +131,32 @@ sudo ovs-ofctl -O OpenFlow13 add-flow SW_TW_1 "table=1,in_port=1,eth_type=0x800,
 sudo ovs-ofctl -O OpenFlow13 add-flow SW_TW_1 "table=2,eth_type=0x8847,mpls_bos=1,mpls_label=2312,actions=pop_mpls:0x800,output:1"
 ```
 
+### Static ARP Configuration
+
+```
+# A1
+arp -s 10.0.0.2 0A:00:00:00:00:02
+arp -s 10.0.0.3 0A:00:00:00:00:03
+
+# A2 
+arp -s 10.0.0.1 0A:00:00:00:00:01
+arp -s 10.0.0.3 0A:00:00:00:00:03
+
+# A3
+arp -s 10.0.0.1 0A:00:00:00:00:01
+arp -s 10.0.0.2 0A:00:00:00:00:02
+
+# B1
+arp -s 10.0.0.2 0B:00:00:00:00:02
+
+# B2
+arp -s 10.0.0.1 0B:00:00:00:00:01
+```
+
+
+
+
+
 ## MPLS Forwarding Tables
 
 #### SW_MY_1
@@ -154,8 +180,8 @@ sudo ovs-ofctl -O OpenFlow13 add-flow SW_TW_1 "table=2,eth_type=0x8847,mpls_bos=
 | 234 / untagged  | 2312           | A3 (10.0.0.3)    | 4        |
 | 321 / untagged  | 333            | B1 (10.0.0.1)    | 3        |
 | 3532            | pop            | B2 (10.0.0.2)    | 2        |
-| 2313 / untagged | ??             | C1 (192.168.1.1) |          |
-| 2355 / untagged | ??             | C2 (192.168.1.2) |          |
+| 2313 / untagged | ??             | C1 (192.168.1.1) | ??       |
+| 2355 / untagged | ??             | C2 (192.168.1.2) | ??       |
 
 #### SW_TW_1
 
@@ -164,8 +190,8 @@ sudo ovs-ofctl -O OpenFlow13 add-flow SW_TW_1 "table=2,eth_type=0x8847,mpls_bos=
 | 123 / untagged   | 232            | A1 (10.0.0.1)    | 4        |
 | 3221 / untagged  | 4211           | A2 (10.0.0.2)    | 3        |
 | 2312             | pop            | A3 (10.0.0.3)    | 1        |
-| 2321 / untagged  | ??             | B1 (10.0.0.1)    |          |
-| 21312 / untagged | ??             | B2 (10.0.0.2)    |          |
+| 2321 / untagged  | ??             | B1 (10.0.0.1)    | ??       |
+| 21312 / untagged | ??             | B2 (10.0.0.2)    | ??       |
 | 3233 / untagged  | 2421           | C1 (192.168.1.1) | 4        |
 | 3232             | pop            | C2 (192.168.1.2) | 2        |
 
